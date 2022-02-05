@@ -61,6 +61,7 @@ def display_customers():
 check_in(1, 'John', '12/12/12', '12/12/12', '1', '1')
 check_in(2, 'ohn', '12/12/12', '12/12/12', '2', '2')
 check_in(3, 'hn', '12/12/12', '12/12/12', '3', '3')
+display_customers()
 input('Press enter to continue')
 display_customers()
 input('Press enter to continue')

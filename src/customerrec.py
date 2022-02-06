@@ -53,7 +53,7 @@ def display_customers():
 def dump_customers():
     global customers
     with open('customers.json', 'w') as f:
-        json.dump(customers, f)
+        json.dump(customers, f, indent=4)
 
 
 def load_customers():

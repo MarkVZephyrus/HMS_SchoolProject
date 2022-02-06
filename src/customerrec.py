@@ -16,18 +16,16 @@ except FileNotFoundError:
         customers = {}
 
 
-def check_in(room_number, customer_name, check_in_date, check_out_date, room_type):
+def check_in(room_number, customer_name, check_in_date, check_out_date):
     global customers
-    if room_type.capitalize() not in room_types:
-        raise ValueError('Invalid room type')
     if check_in_date > check_out_date:
         raise ValueError('Check-in date must be before check-out date')
     try:
         customers[int(list(customers)[-1])+1] = [room_number, customer_name,
-                                                 check_in_date, check_out_date, room_type]
+                                                 check_in_date, check_out_date, "T"+str(room_number)[0]]
     except IndexError:
         customers["101"] = [room_number, customer_name,
-                            check_in_date, check_out_date, room_type]
+                            check_in_date, check_out_date, "T"+str(room_number)[0]]
     dump_customers()
 
 
@@ -67,10 +65,10 @@ def load_customers():
 
 def display_customer(srno):
     global customers
-    print("{:<10} | {:<20} {:<20} {:<20} {:<20}".format(
-        "Sr. No.", "Room No.", "Customer Name", "Check-in Date", "Check-out Date"))
+    print("{:<10} | {:<20} {:<20} {:<20} {:<20} {:<20}".format(
+        "Sr. No.", "Room No.", "Customer Name", "Check-in Date", "Check-out Date", "Room Type"))
     print("{:<10} | {:<20} {:<20} {:<20} {:<20} {:<20}".format(srno, customers[srno][0], customers[srno]
           [1], customers[srno][2], customers[srno][3], customers[srno][4]))
     print("##################################################################\n")
-    print("net cost: ", locale.currency(
+    print("Net cost: ", locale.currency(
         room_types[customers[srno][4].capitalize()], grouping=True))

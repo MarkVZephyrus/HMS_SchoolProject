@@ -21,11 +21,7 @@ def main():
                 customer_name = input("Enter customer name: ")
                 check_in_date = input("Enter check-in date (dd/mm/yyyy): ")
                 check_out_date = input("Enter check-out date (dd/mm/yyyy): ")
-                print("Rooms available: ")
-                for room in cr.room_types:
-                    print(room," | ", locale.currency(cr.room_types[room], grouping=True))
-                room_type = input("Enter room type: ")
-                cr.check_in(room_number, customer_name, check_in_date, check_out_date, room_type)
+                cr.check_in(room_number, customer_name, check_in_date, check_out_date)
             except ValueError as e:
                 print(e)
                 continue

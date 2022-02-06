@@ -1,70 +1,62 @@
-import pickle
+import customerrec as cr
+import locale
+locale.setlocale(locale.LC_ALL, 'en_IN.UTF-8')
 
-rooms = {'1':1,'2':2,'3':3}
 
-customers = []
-
-try:
-    with open('customers.hms','rb') as f:
-        if f.read() == b'':
-            customers = []
-        else:
-            try: customers = pickle.load(f)
-            except EOFError: pass
-except FileNotFoundError:
-    with open('customers.hms','wb') as f:
-        customers = []
-
-class Customer:
-    
-    global customers
-
-    def __init__(self,srno,name,check_in,check_out,room_no,room_type):
-        self.name = name
-        self.check_in = check_in
-        self.check_out = check_out
-        self.room_no = room_no
-        if room_type in rooms.keys():
-            self.room_type = room_type
-        else:
-            raise ValueError('Invalid room type')
-        self.srno = srno
-    
-
-def check_in(srno,name,check_in,check_out,room_no,room_type):
-    customer = Customer(srno,name,check_in,check_out,room_no,room_type)
-    if customer.check_in > customer.check_out:
-        raise ValueError('Check in date cannot be greater than check out date')
-    for customer in customers:
-        if customer.srno == srno:
-            raise ValueError('SrNo must be unique')
-    customers.append(customer)
-    with open('customers.hms','wb') as f:
-        pickle.dump(customers,f)
-
-def check_out(srno):
-    for customer in customers:
-        if customer.srno == srno:
-            customers.remove(customer)
+def main():
+    while True:
+        print("##################################################################\n")
+        print("Welcome to the Hotel Management System")
+        print("1. Check-in")
+        print("2. Check-out")
+        print("3. Display all customers")
+        print("4. Display customer")
+        print("5. Exit")
+        print("\n##################################################################\n")
+        choice = int(input("Enter your choice: "))
+        print('\n')
+        if choice == 1:
+            try:
+                room_number = int(input("Enter room number: "))
+                customer_name = input("Enter customer name: ")
+                check_in_date = input("Enter check-in date (dd/mm/yyyy): ")
+                check_out_date = input("Enter check-out date (dd/mm/yyyy): ")
+                print("Rooms available: ")
+                for room in cr.room_types:
+                    print(room," | ", locale.currency(cr.room_types[room], grouping=True))
+                room_type = input("Enter room type: ")
+                cr.check_in(room_number, customer_name, check_in_date, check_out_date, room_type)
+            except ValueError as e:
+                print(e)
+                continue
+            print("Customer checked-in successfully!")
+            print('\n')
+            continue
+        elif choice == 2:
+            srno = input("Enter customer's Sr. No.: ")
+            print(cr.display_customer(srno))
+            if input("proceed to check-out? (y/n): ") == 'y':
+                if cr.check_out(srno) == 0:
+                    print("Customer checked-out successfully!")
+                print('\n')
+            continue
+        elif choice == 3:
+            cr.display_customers()
+            print('\n')
+            continue
+        elif choice == 4:
+            srno = input("Enter customer's Sr. No.: ")
+            cr.display_customer(srno)
+            print('\n')
+            continue
+        elif choice == 5:
+            cr.dump_customers()
             break
-    else:
-        raise ValueError('Customer not found')
-    with open('customers.hms','wb') as f:
-        pickle.dump(customers,f)
+        else:
+            print("Invalid choice")
+            print('\n')
+            continue
 
-def display_customers():
-    for customer in customers:
-        print('{} _ {} _ {} _ {} _ {} _ {}'\
-            .format(customer.srno,\
-            customer.name,customer.check_in,customer.check_out,customer.room_no,customer.room_type))
 
-check_in(1, 'John', '12/12/12', '12/12/12', '1', '1')
-check_in(2, 'ohn', '12/12/12', '12/12/12', '2', '2')
-check_in(3, 'hn', '12/12/12', '12/12/12', '3', '3')
-display_customers()
-input('Press enter to continue')
-display_customers()
-input('Press enter to continue')
-check_out(1)
-display_customers()
-input('Press enter to continue')
+if __name__ == "__main__":
+    main()

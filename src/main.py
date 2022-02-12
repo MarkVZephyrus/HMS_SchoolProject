@@ -9,9 +9,10 @@ def main():
         print("Welcome to the Hotel Management System")
         print("1. Check-in")
         print("2. Check-out")
-        print("3. Display all customers")
-        print("4. Display customer")
-        print("5. Exit")
+        print("3. Register meal")
+        print("4. Display all customers")
+        print("5. Display customer")
+        print("6. Exit")
         print("\n##################################################################\n")
         choice = int(input("Enter your choice: "))
         print('\n')
@@ -37,15 +38,20 @@ def main():
                 print('\n')
             continue
         elif choice == 3:
+            srno = input("Enter SrNo: ")
+            meal = input("Enter meal: ")
+            cr.take(srno, meal)
+            print("\nDone!")
+        elif choice == 4:
             cr.display_customers()
             print('\n')
             continue
-        elif choice == 4:
+        elif choice == 5:
             srno = input("Enter customer's Sr. No.: ")
             cr.display_customer(srno)
             print('\n')
             continue
-        elif choice == 5:
+        elif choice == 6:
             cr.dump_customers()
             break
         else:

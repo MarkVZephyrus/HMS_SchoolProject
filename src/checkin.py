@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import *
-import customerrec as cr
+import _customer as cr
 
 
 def chkin(t):

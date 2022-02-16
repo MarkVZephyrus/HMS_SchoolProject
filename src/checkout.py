@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-import customerrec as cr
+import _customer as cr
 import locale
 locale.setlocale(locale.LC_ALL, 'en_IN.UTF-8')
 

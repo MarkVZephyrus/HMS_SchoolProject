@@ -2,10 +2,10 @@ import json
 import locale
 
 customers = {
-    #"SrNo": {
+    # "SrNo": {
     #    "RoomNo": "", "CustomerName": "", "CheckInDate": "",
     #    "CheckOutDate": "", "RoomType": "", "Costs": {}
-    #}
+    # }
 }
 
 room_types = {'T1': 500, 'T2': 650, 'T3': 700, 'T4': 1000, 'T5': 2000}
